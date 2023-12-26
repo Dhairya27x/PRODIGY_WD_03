@@ -7,8 +7,18 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <h1>Tic Tac Toe</h1>
-    <div id="board"></div>
+    <div id="background"></div>
+    <div id="container">
+        <h1>Tic Tac Toe</h1>
+        <label for="difficulty">Select Difficulty:</label>
+        <select id="difficulty" onchange="changeDifficulty()">
+            <option value="easy">Easy</option>
+            <option value="hard">Hard</option>
+        </select>
+        <div id="board"></div>
+        <button onclick="resetGame()">Reset Game</button>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
+
