@@ -1,6 +1,13 @@
 let currentPlayer = 'X';
 let gameBoard = ['', '', '', '', '', '', '', '', ''];
+let difficulty = 'easy'; // Default difficulty
 const cells = document.querySelectorAll('.cell');
+const difficultySelect = document.getElementById('difficulty');
+
+difficultySelect.addEventListener('change', () => {
+    difficulty = difficultySelect.value;
+    resetGame();
+});
 
 cells.forEach(cell => {
     cell.addEventListener('click', handleCellClick);
@@ -21,7 +28,29 @@ function handleCellClick(event) {
             resetGame();
         } else {
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+
+            if (currentPlayer === 'O' && difficulty === 'hard') {
+                makeComputerMove();
+            }
         }
+    }
+}
+
+function makeComputerMove() {
+    // Simple random move for demonstration purposes
+    const emptyCells = gameBoard.reduce((acc, val, index) => (val === '' ? acc.concat(index) : acc), []);
+    const randomIndex = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+    gameBoard[randomIndex] = currentPlayer;
+    cells[randomIndex].textContent = currentPlayer;
+
+    if (checkWinner()) {
+        alert(`${currentPlayer} wins!`);
+        resetGame();
+    } else if (!gameBoard.includes('')) {
+        alert('It\'s a draw!');
+        resetGame();
+    } else {
+        currentPlayer = 'X';
     }
 }
 
@@ -48,12 +77,8 @@ function resetGame() {
         cell.textContent = '';
     });
     currentPlayer = 'X';
-}
 
-// Create the board elements dynamically
-const boardElement = document.getElementById('board');
-for (let i = 0; i < 9; i++) {
-    const cell = document.createElement('div');
-    cell.className = 'cell';
-    boardElement.appendChild(cell);
+    if (currentPlayer === 'O' && difficulty === 'hard') {
+        makeComputerMove();
+    }
 }
