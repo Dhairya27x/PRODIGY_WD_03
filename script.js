@@ -15,8 +15,10 @@ function handleCellClick(event) {
 
         if (checkWinner()) {
             alert(`${currentPlayer} wins!`);
+            resetGame();
         } else if (!gameBoard.includes('')) {
             alert('It\'s a draw!');
+            resetGame();
         } else {
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
         }
@@ -55,9 +57,3 @@ for (let i = 0; i < 9; i++) {
     cell.className = 'cell';
     boardElement.appendChild(cell);
 }
-
-// Add reset button
-const resetButton = document.createElement('button');
-resetButton.textContent = 'Reset Game';
-resetButton.addEventListener('click', resetGame);
-document.body.appendChild(resetButton);
